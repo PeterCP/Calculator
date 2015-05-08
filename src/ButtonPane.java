@@ -6,4 +6,8 @@ import javax.swing.*;
 public class ButtonPane extends JPanel {
 
 	private String[] buttonLabels = {"<-", "CE", "C", "±", "√",};
+
+	public ButtonPane () {
+		super ();
+	}
 }
