@@ -82,7 +82,8 @@ public class Calculator extends JPanel implements ActionListener {
 		//Container contentPane = frame.getContentPane ();
 		//contentPane.add (new Calculator ());
 		//frame.setVisible (true);
-		char radix = (char) 0x221A;
-		System.out.println (radix);
+
+		//char radix = (char) 0x221A;
+		//System.out.println (radix);
 	}
 }
