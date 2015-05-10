@@ -13,7 +13,7 @@ public class ButtonPane extends JPanel implements ActionListener {
 	//		{"<-", "CE", "C", "±", "√"},
 	//		{"7", "8", "9", "/", "%"},
 	//		{"4", "5", "6", "*", "1/x"},
-	//		{"1", "2", "3", "-", "mod"},
+	//		{"1", "2", "3", "-", "Ans"},
 	//		{"0", "00", ".", "+", "="}
 	//};
 
@@ -22,7 +22,7 @@ public class ButtonPane extends JPanel implements ActionListener {
 			{"<-", "CE", "C", "+-", "sqrt"},
 			{"7", "8", "9", "/", "%"},
 			{"4", "5", "6", "*", "1/x"},
-			{"1", "2", "3", "-", "mod"},
+			{"1", "2", "3", "-", "Ans"},
 			{"0", "00", ".", "+", "="}
 	};
 
