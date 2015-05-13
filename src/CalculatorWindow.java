@@ -32,7 +32,6 @@ public class CalculatorWindow extends JFrame implements ActionListener {
 		displayUpper.setSize (260, 20);
 		displayUpper.setFont (new Font ("Arial", Font.PLAIN, 17));
 		displayUpper.setHorizontalAlignment (SwingConstants.RIGHT);
-
 		getContentPane ().add (displayUpper);
 
 		displayLower = new JLabel (logic.getLower ());
