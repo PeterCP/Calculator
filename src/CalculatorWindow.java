@@ -17,9 +17,6 @@ public class CalculatorWindow extends JFrame implements ActionListener {
 
 	private JLabel displayUpper, displayLower;
 	private CalculatorLogic logic;
-	//private double result = 0;
-	//private String operator = "=";
-	//private boolean calculating = true;
 
 	public CalculatorWindow () {
 		super ("Calculator");
@@ -73,48 +70,6 @@ public class CalculatorWindow extends JFrame implements ActionListener {
 		displayUpper.setText (logic.getUpper ());
 		displayLower.setText (logic.getLower ());
 	}
-
-	//@Override
-	//public void actionPerformed (ActionEvent e) {
-	//	String cmd = e.getActionCommand ();
-	//	if ('0' <= cmd.charAt (0) && cmd.charAt (0) <= '9' || cmd.equals (".")) {
-	//		if (calculating)
-	//			displayUpper.setText (cmd);
-	//		else
-	//			displayUpper.setText (displayUpper.getText () + cmd);
-	//		calculating = false;
-	//	}
-	//	else {
-	//		if (calculating) {
-	//			if (cmd.equals ("-")) {
-	//				displayUpper.setText (cmd);
-	//				calculating = false;
-	//			}
-	//			else
-	//				operator = cmd;
-	//		}
-	//		else {
-	//			double x = Double.parseDouble (displayUpper.getText ());
-	//			calculate (x);
-	//			operator = cmd;
-	//			calculating = true;
-	//		}
-	//	}
-	//}
-	//
-	//private void calculate (double n) {
-	//	if (operator.equals ("+"))
-	//		result += n;
-	//	else if (operator.equals ("-"))
-	//		result -= n;
-	//	else if (operator.equals ("*"))
-	//		result *= n;
-	//	else if (operator.equals ("/"))
-	//		result /= n;
-	//	else if (operator.equals ("="))
-	//		result = n;
-	//	displayUpper.setText (String.valueOf (result));
-	//}
 
 	public static void main (String[] args) {
 		CalculatorWindow c = new CalculatorWindow ();
