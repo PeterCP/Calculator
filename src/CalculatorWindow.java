@@ -14,9 +14,21 @@ public class CalculatorWindow extends JFrame implements ActionListener {
 			{"1", "2", "3", "-", "mod"},
 			{"0", ".", "%", "+", "="}
 	};
+	private static String[][] scientificButtonLabels = {
+			{"sin", "√x"},
+			{"cos", "3√x"},
+			{"tan", "y√x"},
+			{"x^2", "x^3"},
+			{"x^y", "n!"},
+			{"log", "10^x"}
+	};
 
+	private JMenuBar menuBar;
+	private JMenuItem toggleModeMenuItem, converterMenuItem;
 	private JLabel displayUpper, displayLower;
+	private JPanel basicPanel, scientificPanel;
 	private CalculatorLogic logic;
+	private boolean scientificModeActive;
 
 	public CalculatorWindow () {
 		super ("Calculator");
@@ -25,7 +37,21 @@ public class CalculatorWindow extends JFrame implements ActionListener {
 		setDefaultCloseOperation (WindowConstants.EXIT_ON_CLOSE);
 		setSize (325, 525);
 
+		menuBar = new JMenuBar ();
+		setJMenuBar (menuBar);
+
+		toggleModeMenuItem = new JMenuItem ("Scientific Mode");
+		toggleModeMenuItem.setActionCommand ("toggleMode");
+		toggleModeMenuItem.addActionListener (this);
+		menuBar.add (toggleModeMenuItem);
+
+		converterMenuItem = new JMenuItem ("Unit Converter");
+		converterMenuItem.setActionCommand ("converter");
+		converterMenuItem.addActionListener (this);
+		menuBar.add (converterMenuItem);
+
 		logic = new CalculatorLogic ();
+		scientificModeActive = false;
 
 		displayUpper = new JLabel (logic.getUpper ());
 		displayUpper.setLocation (40, 40);
@@ -41,9 +67,13 @@ public class CalculatorWindow extends JFrame implements ActionListener {
 		displayLower.setHorizontalAlignment (SwingConstants.RIGHT);
 		getContentPane ().add (displayLower);
 
-		Point btnPoint = new Point (15, 125);
+		Point btnPoint;
 		Dimension btnDim = new Dimension (55, 50);
 		JButton btn;
+
+		basicPanel = new JPanel (null);
+
+		btnPoint = new Point ();
 		for (int y = 0; y < 6; y++) {
 			for (int x = 0; x < 5; x++) {
 				btn = new JButton (buttonLabels[y][x]);
@@ -54,20 +84,67 @@ public class CalculatorWindow extends JFrame implements ActionListener {
 				btn.setOpaque (true);
 				btn.setBorderPainted (true);
 				btn.addActionListener (this);
-				getContentPane ().add (btn);
+				basicPanel.add (btn);
 
 				btnPoint.x += 60;
 			}
-			btnPoint.x = 15;
+			btnPoint.x = 0;
 			btnPoint.y += 60;
 		}
+		basicPanel.setSize (60*5, 60*6);
+		basicPanel.setLocation (15, 125);
+		getContentPane ().add (basicPanel);
+
+		scientificPanel = new JPanel (null);
+		btnPoint = new Point ();
+		for (int y = 0; y < 5; y++) {
+			for (int x = 0; x < 2; x++) {
+				btn = new JButton (scientificButtonLabels[y][x]);
+				btn.setSize (btnDim);
+				btn.setLocation (btnPoint);
+				btn.setBorder (new LineBorder (Color.BLACK));
+				btn.setBackground (Color.WHITE);
+				btn.setOpaque (true);
+				btn.setBorderPainted (true);
+				btn.addActionListener (this);
+				scientificPanel.add (btn);
+
+				btnPoint.x += 60;
+			}
+			btnPoint.x = 0;
+			btnPoint.y += 60;
+		}
+		scientificPanel.setSize (60*2, 60*5);
+		scientificPanel.setLocation (325, 125);
+		scientificPanel.setVisible (false);
+		getContentPane ().add (scientificPanel);
 	}
 
 	@Override
 	public void actionPerformed (ActionEvent e) {
-		logic.actionPerformed (e);
-		displayUpper.setText (logic.getUpper ());
-		displayLower.setText (logic.getLower ());
+		String cmd = e.getActionCommand ();
+		if (cmd.equals ("toggleMode")) {
+			if (scientificModeActive) {
+				setSize (325, 525);
+				scientificPanel.setVisible (false);
+				toggleModeMenuItem.setText ("Scientific Mode");
+			}
+			else {
+				setSize (455, 525);
+				scientificPanel.setVisible (true);
+				toggleModeMenuItem.setText ("Basic Mode");
+			}
+			scientificModeActive = !scientificModeActive;
+		}
+		else if (cmd.equals ("converter")) {
+			UnitConverter uc = new UnitConverter ();
+			uc.setVisible (true);
+		}
+		else {
+			logic.actionPerformed (e);
+			displayUpper.setText (logic.getUpper ());
+			displayLower.setText (logic.getLower ());
+		}
 	}
 
 	public static void main (String[] args) {

@@ -21,9 +21,10 @@ public class CalculatorLogic implements ActionListener {
 		}
 	}
 
-	private ArrayList<String> numbers = new ArrayList<String> (
-			Arrays.asList ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "00", ".")),
-			operators = new ArrayList<String> (Arrays.asList ("+", "-", "*", "÷", "=", "^", "mod"));
+	private ArrayList<String> numbers = new ArrayList<String> (Arrays.asList
+			("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "00", ".")),
+			operators = new ArrayList<String> (Arrays.asList
+					("+", "-", "*", "÷", "=", "^", "mod", "y√x", "x^y"));
 
 	private double dUpper, dLower, memory;
 	private String upper, lower, operator;
@@ -96,8 +97,11 @@ public class CalculatorLogic implements ActionListener {
 			else if (operator.equals ("mod")) {
 				dLower = dUpper % dLower;
 			}
-			else if (operator.equals ("^")) {
+			else if (operator.equals ("^") || operator.equals ("x^y")) {
 				dLower = Math.pow (dUpper, dLower);
+			}
+			else if (operator.equals ("y√x")) {
+				dLower = Math.pow (dUpper, 1/dLower);
 			}
 			lower = Double.toString (dLower);
 			operator = null;
@@ -114,15 +118,15 @@ public class CalculatorLogic implements ActionListener {
 	@Override
 	public void actionPerformed (ActionEvent event) {
 		String cmd = event.getActionCommand ();
-		boolean isNum = true;
+		boolean isNum;
 		try {
 			dLower = Double.parseDouble (lower);
+			isNum = true;
 		}
 		catch (NumberFormatException exception) {
 			dLower = Double.NaN;
 			isNum = false;
 		}
-		System.out.println (isNum + ", " + dLower);
 
 		if (numbers.contains (cmd)) {
 			if (calculating)
@@ -227,18 +231,6 @@ public class CalculatorLogic implements ActionListener {
 				}
 				error = true;
 			}
-			else if (cmd.equals ("√")) {
-				if (isNum) {
-					upper = "√ " + lower + " =";
-					if (dLower >= 0) {
-						dLower = Math.sqrt (dLower);
-						//lower = Double.toString (Math.sqrt (dLower));
-						lower = Double.toString (dLower);
-					}
-					else
-						error = true;
-				}
-			}
 			else if (cmd.equals ("1/X")) {
 				if (isNum) {
 					upper = "1 ÷ " + lower + " =";
@@ -258,31 +250,66 @@ public class CalculatorLogic implements ActionListener {
 				}
 				error = true;
 			}
-			//else if (cmd.equals ("mod")) {
-			//	//
-			//}
-			//else if (cmd.equals ("+")) {
-			//	operator = cmd;
-			//}
-			//else if (cmd.equals ("-")) {
-			//	if (calculating) {
-			//		lower = cmd;
-			//		calculating = false;
-			//	}
-			//	else
-			//		operator = cmd;
-			//}
-			//else if (cmd.equals ("÷")) {
-			//	//
-			//}
-			//else if (cmd.equals ("*")) {
-			//	//
-			//}
-			//else if (cmd.equals ("=")) {
-			//	//
-			//}
+			else if (cmd.equals ("√") || cmd.equals ("√x")) {
+				if (isNum) {
+					upper = "√ " + lower + " =";
+					if (dLower >= 0) {
+						dLower = Math.sqrt (dLower);
+						lower = Double.toString (dLower);
+					}
+					else
+						error = true;
+				}
+			}
+			else if (cmd.equals ("3√x")) {
+				if (isNum) {
+					upper = "3√ " + lower + " =";
+					dLower = Math.pow (dLower, 1/3);
+					lower = Double.toString (dLower);
+				}
+			}
+			else if (cmd.equals ("y√x")) {
+			}
+
+			else if (cmd.equals ("x^2")) {
+				if (isNum) {
+					dLower = Math.pow (dLower, 2);
+					upper = lower + " ^ 2 =";
+					lower = Double.toString (dLower);
+				}
+			}
+			else if (cmd.equals ("x^3")) {
+				if (isNum) {
+					dLower = Math.pow (dLower, 3);
+					upper = lower + " ^ 3 =";
+					lower = Double.toString (dLower);
+				}
+			}
+			else if (cmd.equals ("n!")) {
+				long n = Math.round (dLower);
+				dLower = 1;
+				for (int i = 1; i <= n; i++) {
+					dLower *= i;
+				}
+				upper = lower + "! =";
+				lower = Double.toString (dLower);
+			}
+			else if (cmd.equals ("sin")) {
+				dLower = Math.sin (dLower);
+				upper = "sin " + lower + " =";
+				lower = Double.toString (dLower);
+			}
+			else if (cmd.equals ("cos")) {
+				dLower = Math.cos (dLower);
+				upper = "cos " + lower + " =";
+				lower = Double.toString (dLower);
+			}
+			else if (cmd.equals ("tan")) {
+				dLower = Math.tan (dLower);
+				upper = "tan " + lower + " =";
+				lower = Double.toString (dLower);
+			}
 		}
-		//System.out.println (this);
 		if (!error) {
 			save ();
 		}
