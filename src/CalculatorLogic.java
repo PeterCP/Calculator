@@ -9,16 +9,6 @@ public class CalculatorLogic implements ActionListener {
 		double dUpper, dLower, memory;
 		String upper, lower, operator;
 		boolean calculating, error;
-
-		void clear () {
-			dUpper = Double.NaN;
-			dLower = 0;
-			upper = "";
-			lower = "0";
-			operator = null;
-			calculating = true;
-			error = false;
-		}
 	}
 
 	private ArrayList<String> numbers = new ArrayList<String> (Arrays.asList
@@ -268,9 +258,6 @@ public class CalculatorLogic implements ActionListener {
 					lower = Double.toString (dLower);
 				}
 			}
-			else if (cmd.equals ("y√x")) {
-			}
-
 			else if (cmd.equals ("x^2")) {
 				if (isNum) {
 					dLower = Math.pow (dLower, 2);
